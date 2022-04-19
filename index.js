@@ -7,9 +7,20 @@ const colors = [["Gold", "#FFD700"], ["Chilli Pepper", "#C11B17"], ["Crystal Blu
 const motives = ["Creature", "Weapon", "Toy", "Vehicle", "Robot", "City", "Monster", "Humanoid"]
 const art_styles = ["Voxelated", "Realistic", "Lowpoly", "Abstract", "Miniature", "Isometric"]
 
-// In a [world), a (quality) (color) (motive) is rendered in a (art style) art style.
+// In a (world) world, a (quality) (color) (motive) is rendered in a (art style) art style.
 
 button.addEventListener('click', () => {
-  color = colors[Math.floor(Math.random() * colors.length)];  
-  text.innerHTML = `In a ${worlds[Math.floor(Math.random() * worlds.length)]} world, a ${qualities[Math.floor(Math.random() * qualities.length)]} <span style="color:${color[1]}">${color[0]}</span> ${motives[Math.floor(Math.random() * motives.length)]} is rendered in a ${art_styles[Math.floor(Math.random() * art_styles.length)]} art style.`;
+  color = colors[Math.floor(Math.random() * colors.length)]; 
+  text.innerHTML = `In a ${worlds[Math.floor(Math.random() * worlds.length)]} world, a ${qualities[Math.floor(Math.random() * qualities.length)]} <span class="color">${color[0]}</span> ${motives[Math.floor(Math.random() * motives.length)]} is rendered in a ${art_styles[Math.floor(Math.random() * art_styles.length)]} art style.`;
+  const color_span = document.querySelector('.color');
+  var css = `.color:hover{ background-color: ${color[1]}}`;
+  var style = document.createElement('style');
+
+  if (style.styleSheet) {
+      style.styleSheet.cssText = css;
+  } else {
+      style.appendChild(document.createTextNode(css));
+  }
+
+  document.getElementsByTagName('head')[0].appendChild(style);
 });
