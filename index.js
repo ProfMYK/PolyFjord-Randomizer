@@ -1,5 +1,6 @@
 const text = document.getElementById('text');
 const button = document.getElementById('button');
+const reset = document.getElementById('reset');
 
 const worlds = ["Dystopian", "Utopian", "Chaotic", "Peaceful", "Corrupt", "Ancient", "Futuristic", "Crime infested", "Sci-fi", "Real"]
 const qualities = ["Dangerous", "Wild", "Advanced", "Lost", "Flying", "Armored", "Walking", "Magical", "Broken", "Beautiful", "Luxurious", "Dying"]
@@ -9,11 +10,13 @@ const art_styles = ["Voxelated", "Realistic", "Lowpoly", "Abstract", "Miniature"
 
 // In a (world) world, a (quality) (color) (motive) is rendered in a (art style) art style.
 
+let color = []
+
 button.addEventListener('click', () => {
   color = colors[Math.floor(Math.random() * colors.length)]; 
-  text.innerHTML = `In a ${worlds[Math.floor(Math.random() * worlds.length)]} world, a ${qualities[Math.floor(Math.random() * qualities.length)]} <span class="color">${color[0]}</span> ${motives[Math.floor(Math.random() * motives.length)]} is rendered in a ${art_styles[Math.floor(Math.random() * art_styles.length)]} art style.`;
+  text.innerHTML = `In a ${worlds[Math.floor(Math.random() * worlds.length)]} world, a ${qualities[Math.floor(Math.random() * qualities.length)]} <span class="color" onmouseover=colormouseover() onmouseleave=colormouseleft()>${color[0]}</span> ${motives[Math.floor(Math.random() * motives.length)]} is rendered in a ${art_styles[Math.floor(Math.random() * art_styles.length)]} art style.`;
   const color_span = document.querySelector('.color');
-  var css = `.color:hover{ background-color: ${color[1]}}`;
+  var css = `.color:hover{ background-color: ${color[1]}; color: black}\n.color{ color: ${color[1]}; transition: all 0.5s; }`;
   var style = document.createElement('style');
 
   if (style.styleSheet) {
@@ -24,3 +27,18 @@ button.addEventListener('click', () => {
 
   document.getElementsByTagName('head')[0].appendChild(style);
 });
+
+function colormouseover() {
+  const color_span = document.querySelector('.color');
+  color_span.innerHTML = `${color[1]}`;
+  console.log(color[1])
+};
+function colormouseleft() {
+  const color_span = document.querySelector('.color');
+  color_span.innerHTML = `${color[0]}`;
+  console.log("log")
+};
+
+reset.addEventListener('click', () => { 
+  text.innerHTML = "";
+})
