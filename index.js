@@ -10,46 +10,39 @@ const art_styles = ["Voxelated", "Realistic", "Lowpoly", "Abstract", "Miniature"
 
 // In a (world) world, a (quality) (color) (motive) is rendered in a (art style) art style.
 
+let flag = false
 let color = []
-color = colors[Math.floor(Math.random() * colors.length)]; 
-text.innerHTML = `In a ${worlds[Math.floor(Math.random() * worlds.length)]} world, a ${qualities[Math.floor(Math.random() * qualities.length)]} <span class="color" onmouseover=colormouseover() onmouseleave=colormouseleft()>${color[0]}</span> ${motives[Math.floor(Math.random() * motives.length)]} is rendered in a ${art_styles[Math.floor(Math.random() * art_styles.length)]} art style.`;
-const color_span = document.querySelector('.color');
-var css = `.color:hover{ background-color: ${color[1]}; color: black}\n.color{ color: ${color[1]}; transition: all 0.5s; }`;
-var style = document.createElement('style');
-
-if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-} else {
-    style.appendChild(document.createTextNode(css));
-}
-
-document.getElementsByTagName('head')[0].appendChild(style);
-button.addEventListener('click', () => {
-  color = colors[Math.floor(Math.random() * colors.length)]; 
-  text.innerHTML = `In a ${worlds[Math.floor(Math.random() * worlds.length)]} world, a ${qualities[Math.floor(Math.random() * qualities.length)]} <span class="color" onmouseover=colormouseover() onmouseleave=colormouseleft()>${color[0]}</span> ${motives[Math.floor(Math.random() * motives.length)]} is rendered in a ${art_styles[Math.floor(Math.random() * art_styles.length)]} art style.`;
+function generate() {
+  color = colors[Math.floor(Math.random() * colors.length)];
+  text.innerHTML = `In a ${worlds[Math.floor(Math.random() * worlds.length)]} world, a ${qualities[Math.floor(Math.random() * qualities.length)]} <span class="color" onclick=colorpressed()>${color[0]}</span> ${motives[Math.floor(Math.random() * motives.length)]} is rendered in a ${art_styles[Math.floor(Math.random() * art_styles.length)]} art style.`;
   const color_span = document.querySelector('.color');
   var css = `.color:hover{ background-color: ${color[1]}; color: black}\n.color{ color: ${color[1]}; transition: all 0.5s; }`;
   var style = document.createElement('style');
 
   if (style.styleSheet) {
-      style.styleSheet.cssText = css;
+    style.styleSheet.cssText = css;
   } else {
-      style.appendChild(document.createTextNode(css));
+    style.appendChild(document.createTextNode(css));
   }
 
   document.getElementsByTagName('head')[0].appendChild(style);
-});
+  flag = false
+}
 
-function colormouseover() {
+generate()
+
+button.addEventListener('click', generate);
+
+function colorpressed() {
   const color_span = document.querySelector('.color');
-  color_span.innerHTML = `${color[1]}`;
-  console.log(color[1])
-};
-function colormouseleft() {
-  const color_span = document.querySelector('.color');
-  color_span.innerHTML = `${color[0]}`;
-  console.log("log")
-};
+  if (flag) {
+    color_span.innerHTML = `${color[0]}`;
+    flag = false;
+  } else {
+    color_span.innerHTML = `${color[1]}`;
+    flag = true;
+  }
+}
 
 reset.addEventListener('click', () => { 
   text.innerHTML = "";
